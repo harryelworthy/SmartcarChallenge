@@ -57,10 +57,15 @@ def get_vehicle_info(id):
 	color = data['data']['color']['value']
 	drivetrain = data['data']['driveTrain']['value']
 	is_four_door = data['data']['fourDoorSedan']['value']
+	is_two_door = data['data']['twoDoorCoupe']['value']
+
+	# Check if door data is consistent
+	if is_four_door == is_two_door:
+		abort(500, 'GM gave inconsistent door responses')
+
 	# Establish number of doors
 	if is_four_door: doorcount = 4
 	else: doorcount = 2 
-	# TODO Need to email and check what to do if both False/True
 	
 	# Put response into output format
 	response = {
@@ -98,7 +103,6 @@ def get_security_info(id):
 	data = request_GM_api(id, '/getSecurityStatusService')
 
 	# Set both outputs to None, to be output in case of inadequate info from GM
-	# TODO check this
 	left_locked = None
 	right_locked = None
 
