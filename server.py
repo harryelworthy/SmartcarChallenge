@@ -24,9 +24,12 @@ def request_GM_api(id, suffix, add_params={}):
 	response = requests.post(url=BASE_URL + suffix, json=parameters, headers=headers)
 
 	# Check that GM provided a good response
-	if response.status_code != 200:
-		abort(500, 'GM server gave error code ' + response.status_code)
-
+	status = int(response.json()['status'])
+	if status == 404:
+		abort(400, 'Key not found')
+	elif status != 200:
+		abort(500, 'GM server gave error code ' + str(status))
+	print(status)
 	return response.json()
 
 
@@ -73,6 +76,8 @@ def get_vehicle_info(id):
 def get_security_info(id):
 	"""
 	Vehicle Security endpoint. GET request that sits at /vehicles/:id.
+
+	NOTE: Decided to keep None as response if that's what's given by GM. Seems a reasonable response if no data is available for a door.
 	
 	Request:
 	GET /vehicles/:id/doors
@@ -101,11 +106,9 @@ def get_security_info(id):
 	door_list = data['data']['doors']['values']
 	for door in door_list:
 		if door['location']['value'] == 'frontLeft':
-			left_locked = door['locked']['value'] == 'True'
+			left_locked = door['locked']['value'] == 'True'		# Stored as string, so requires checking against one to get Boolean
 		elif door['location']['value'] == 'frontRight':
-			right_locked = door['locked']['value'] == 'True'
-	# WHAT TO DO IF EITHER IS NONE?
-	# TODO Need to lowercase output
+			right_locked = door['locked']['value'] == 'True'	# As above
 
 	# Put response into output format
 	response = [
@@ -124,6 +127,8 @@ def get_security_info(id):
 def get_fuel(id):
 	"""
 	Vehicle Fuel endpoint. GET request that sits at /vehicles/:id/fuel. 
+
+	NOTE: Decided to keep None as response if that's what's given by GM. Seems a reasonable response if no data is available for fuel.
 	
 	Request:
 	GET /vehicles/:id/fuel
@@ -147,6 +152,8 @@ def get_fuel(id):
 def get_battery(id):
 	"""
 	Vehicle Battery endpoint. GET request that sits at /vehicles/:id/battery.
+
+	NOTE: Decided to keep None as response if that's what's given by GM. Seems a reasonable response if no data is available for battery.
 	
 	Request:
 	GET /vehicles/:id/battery
@@ -208,7 +215,7 @@ def start_stop(id):
 	elif data['actionResult']['status'] == 'FAILED':
 		status = 'error'
 	else:
-		abort(500, 'Error with GM response')
+		abort(500, 'Bad response from GM')
 
 	response = {
 		'status': status,
@@ -226,7 +233,12 @@ def create_app():
 	return app
 
 def check_id(id):
-	if !isinstance(id, int): 
+	"""
+	Helper function to send error if id is not an integer.
+	"""
+	try:
+		id = int(id)
+	except:
 		abort(400, 'Non-int ID')
 
 

@@ -1,6 +1,11 @@
 import requests
 
 
+BASE_URL = 'http://gmapi.azurewebsites.net' 
+
+
+
+
 """
 id = 1234
 suffix = "/vehicles/" + str(id)
@@ -8,8 +13,9 @@ print(response = requests.get(url="http://127.0.0.1:5000" + suffix))
 print(response.status_code)
 """
 
+
 """
-id = 0000
+id = 1
 suffix = "/getSecurityStatusService"
 parameters = {"id": str(id), "responseType": "JSON"}
 headers = {"Content-Type":"application/json"}
@@ -17,14 +23,21 @@ response = requests.post(url="http://gmapi.azurewebsites.net" + suffix, json=par
 data = response.json()
 #print(data['data']['doors']['values'][0])
 print(data)
-"""
+print(response.status_code)
+
+if response.json()['reason'][:10] == 'Vehicle id':
+	print('sweet')
+
+print(data['reason'])
 
 """
-id = 1234
+
+
+
+id = 0000
 suffix = "/vehicles/" + str(id) + "/doors"
 response = requests.get(url="http://127.0.0.1:5000" + suffix)
-print(response.json())
-"""
+print(response.status_code)
 
 """
 id = 1234
@@ -40,23 +53,23 @@ response = requests.get(url="http://127.0.0.1:5000" + suffix)
 print(response.json())
 """
 """
-id = 1234
+id = 0000
 suffix = "/getEnergyService"
 parameters = {"id": str(id), "responseType": "JSON"}
 headers = {"Content-Type":"application/json"}
 response = requests.post(url="http://gmapi.azurewebsites.net" + suffix, json=parameters, headers=headers)
 data = response.json()
 print(data)
-"""
+
 """
 
-id = 1235
+"""
+id = 0000
 suffix = "/vehicles/" + str(id) + "/engine"
 parameters = {"action": "START"}
 headers = {"Content-Type":"application/json"}
 response = requests.post(url="http://127.0.0.1:5000" + suffix, json=parameters, headers=headers)
-print(response.json())
-
+print(response.status_code)
 """
 
 

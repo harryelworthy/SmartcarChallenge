@@ -8,8 +8,9 @@ This is a flask web app designed to fulfill the API requirements set out in a 3 
 Python3 required. 
 
 ### Install server and requirements
-Download, navigate to the directory and run:
 ``` bash
+git clone https://github.com/harryelworthy/SmartcarChallenge.git
+cd SmartcarChallenge
 mkdir venv
 virtualenv venv
 . venv/bin/activate
