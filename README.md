@@ -35,11 +35,3 @@ py.test
 ```
 
 Important code files are server.py and /tests/test_sc.py. Test JSON files are stored in /tests.
-
-## TODOs
-* Clean up
-** Check requirements and trim down
-* Go through errors
-** Make sure all possible errors are handled
-** Evaluate whether I'm handling correctly
-** Add tests for errors
