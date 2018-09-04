@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Harry's Testing Ground
+tryingout.py
+
 # C extensions
 *.so
 
