@@ -1,0 +1,14 @@
+{
+  "service": "getEnergyService",
+  "status": "200",
+  "data": {
+    "tankLevel": {
+      "type": "Number",
+      "value": "30"
+    },
+    "batteryLevel": {
+      "type": "Number",
+      "value": "50"
+    }
+  }
+}

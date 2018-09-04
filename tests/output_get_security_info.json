@@ -1,0 +1,10 @@
+[
+  {
+    "location": "frontLeft",
+    "locked": false
+  },
+  {
+    "location": "frontRight",
+    "locked": true
+  }
+]
